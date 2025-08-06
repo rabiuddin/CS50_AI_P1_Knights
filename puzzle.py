@@ -11,22 +11,57 @@ CKnave = Symbol("C is a Knave")
 
 # Puzzle 0
 # A says "I am both a knight and a knave."
-knowledge0 = And(
-    # TODO
+statement_0_A = And(
+    AKnight, AKnave
 )
-
+knowledge0 = And(
+    Or(AKnight, AKnave),
+    Not(And(AKnight, AKnave)),
+    
+    Implication(AKnight, statement_0_A),
+    Implication(AKnave, Not(statement_0_A))
+)
 # Puzzle 1
 # A says "We are both knaves."
 # B says nothing.
+statement_1_A = And(
+    AKnave, BKnave
+)
+
 knowledge1 = And(
-    # TODO
+    Or(AKnight, AKnave),
+    Not(And(AKnight, AKnave)),
+
+    Or(BKnight, BKnave),
+    Not(And(BKnight, BKnave)),
+
+    Implication(AKnight, statement_1_A),
+    Implication(AKnave, Not(statement_1_A)),
 )
 
 # Puzzle 2
 # A says "We are the same kind."
 # B says "We are of different kinds."
+statement_2_A = Or(
+    And(AKnight, BKnight),
+    And(AKnave, BKnave)
+)
+statement_2_B = Or(
+    And(BKnight, AKnave),
+    And(BKnave, AKnight),
+)
 knowledge2 = And(
-    # TODO
+    Or(AKnight, AKnave),
+    Not(And(AKnight, AKnave)),
+
+    Or(BKnight, BKnave),
+    Not(And(BKnight, BKnave)),
+
+    Implication(AKnight, statement_2_A),
+    Implication(AKnave, Not(statement_2_A)),
+
+    Implication(BKnight, statement_2_B),
+    Implication(BKnave, Not(statement_2_B)),
 )
 
 # Puzzle 3
@@ -34,8 +69,34 @@ knowledge2 = And(
 # B says "A said 'I am a knave'."
 # B says "C is a knave."
 # C says "A is a knight."
+
+statement_3_A = Or(AKnight, AKnave)
+
+statement_3_B = And( 
+    CKnave, 
+    Biconditional(statement_3_A, AKnave)
+)
+
+statement_3_C = AKnight
+
 knowledge3 = And(
-    # TODO
+    Or(AKnight, AKnave),
+    Not(And(AKnight, AKnave)),
+
+    Or(BKnight, BKnave),
+    Not(And(BKnight, BKnave)),
+
+    Or(CKnight, CKnave),
+    Not(And(CKnight, CKnave)),
+
+    Implication(AKnight, statement_3_A),
+    Implication(AKnave, Not(statement_3_A)),
+
+    Implication(BKnight, statement_3_B),
+    Implication(BKnave, Not(statement_3_B)),
+
+    Implication(CKnight, statement_3_C),
+    Implication(CKnave, Not(statement_3_C)),
 )
 
 
